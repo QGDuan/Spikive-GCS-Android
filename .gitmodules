@@ -1,0 +1,3 @@
+[submodule "webProject/Spikive-Lichtblick"]
+	path = webProject/Spikive-Lichtblick
+	url = git@github.com:QGDuan/Spikive-Lichtblick.git

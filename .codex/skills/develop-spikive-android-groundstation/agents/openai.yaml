@@ -1,0 +1,4 @@
+interface:
+  display_name: "Spikive Android Ground Station"
+  short_description: "开发内嵌 Lichtblick 与 USB 网口的 Android 地面站"
+  default_prompt: "Use $develop-spikive-android-groundstation to inspect the current worktree first, then diagnose or plan the Spikive Android host by separating Android, Web, and Ethernet concerns."
