@@ -114,8 +114,8 @@ android {
         applicationId = "com.example.spikivegcs"
         minSdk = 33
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 8
+        versionName = "1.0.6-flight-2s"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

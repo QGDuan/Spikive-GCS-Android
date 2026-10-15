@@ -1,5 +1,7 @@
 # Spikive GCS Android Host
 
+当前 APK 版本为 `1.0.6-flight-2s`（versionCode 8），基于保存的飞行版构建；实时点云默认及设置页「低」档累计 2 秒。SelectObject 云台控件将上下（俯仰）、左右（航向）、速度、两个反向勾选和发送按钮放在同一排，默认值分别为 50°、45°、14°/s；复用 Web 的 ROS1 发布链路。
+
 ## 模块目标
 
 `app` 是 Spikive 地面站的 Android 宿主。它不是独立的飞控客户端，也不是 ROS/Foxglove 后端。
