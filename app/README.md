@@ -2,7 +2,7 @@
 
 左侧卡片新增经度、纬度、海拔三行显示（经纬度为度分秒，秒保留两位，海拔保留一位米）。以 odom 的 `(0,0,0)` 为北纬 `22°17′00″`、东经 `114°09′00″`、海拔约 `150 m`，固定 `+X 北、+Y 西、+Z 上`；使用卡片对应的 `/drone_{id}_visual_slam/odom`，不是点云。标注“推算”，无数据、断线或超过 3 秒未收到有效位置时显示横线。
 
-当前 APK 版本为 `1.0.14-flight-2s-gridmap`（versionCode 17），基于保存的飞行版构建；实时点云默认及设置页「低」档累计 2 秒。建图打点和自主飞行模式均关闭 `/drone_{id}_localization_pcl` 可视化，只调整显示配置，定位、录制、加载、打点和飞行逻辑保持不变。SelectObject 云台控件将上下（俯仰）、左右（航向）、速度、两个反向勾选和发送按钮放在同一排，默认值分别为 50°、45°、14°/s；复用 Web 的 ROS1 发布链路。
+当前 APK 版本为 `1.0.15-flight-2s-gridmap`（versionCode 18），基于保存的飞行版构建；实时点云默认及设置页「低」档累计 2 秒。默认黑色背景，点云透明度 0.5、点大小 1.0。Add Robot 支持选用本机 WebView 保存的 Bridge URL，录包界面显示最终保存路径。建图打点和自主飞行模式均关闭 `/drone_{id}_localization_pcl` 可视化，只调整显示配置，定位、录制、加载、打点和飞行逻辑保持不变。SelectObject 云台控件将上下（俯仰）、左右（航向）、速度、两个反向勾选和发送按钮放在同一排，默认值分别为 50°、45°、14°/s；复用 Web 的 ROS1 发布链路。
 
 左侧卡片新增「复位视角」：通过已有 `world → base{id}` SLAM TF 回到当前位置，正上方俯视，恢复初始布局默认距离约 33.4 米。保持位置跟随，不跟随机身倾斜；不新增数据订阅或发布飞行/定位命令。
 
@@ -44,7 +44,7 @@ Android App 负责：
   -> WebView 内 WebSocket 使用所选网络访问操作员填写的 Foxglove URL
 ```
 
-Android 不固定、不校验 Foxglove 模块 IP。Web 页面可以继续使用默认地址，也允许操作员输入同一所选网络内的其他模块地址。
+Android 不固定、不校验 Foxglove 模块 IP。有历史记录时，点击 Add Robot 的 URL 输入框可选用最近使用的地址，也可以直接输入同一所选网络内的其他模块地址。
 
 ## 重要边界
 
@@ -185,4 +185,4 @@ AI Agent 在修改代码后应说明建议的 Android Studio 验证步骤，但�
 
 ### 2026-11-12 录包 Action 交付
 
-APK `1.0.14-flight-2s-gridmap`（versionCode 17）与 Web 使用同一份生产资源。录包目录固定 `/home/colman/data`，点击确认开始时生成 `data_YYYYMMDD_HHmm`，开始携带指定 65 项 topics、timeout=10；结束 cmd=2、timeout=120。新协议为 `/nav/map/record/goal` + `spikive_control_sdk/RecordActionGoal`，按匹配 goal_id 的 result 判定完成。Android 网络入口和 WebView 宿主逻辑保持现状。交付目录：`build/artifacts/20261112/record-action/`。
+APK `1.0.15-flight-2s-gridmap`（versionCode 18）与 Web 使用同一份生产资源。录包目录固定 `/home/colman/data`，点击确认开始时生成 `data_YYYYMMDD_HHmm`，开始携带指定 65 项 topics、timeout=10；结束 cmd=2、timeout=120。新协议为 `/nav/map/record/goal` + `spikive_control_sdk/RecordActionGoal`，按匹配 goal_id 的 result 判定完成。Android 网络入口和 WebView 宿主逻辑保持现状。交付目录：`build/artifacts/20261112/record-action/`。
