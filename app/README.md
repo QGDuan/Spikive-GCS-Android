@@ -1,6 +1,16 @@
 # Spikive GCS Android Host
 
-当前 APK 版本为 `1.0.6-flight-2s`（versionCode 8），基于保存的飞行版构建；实时点云默认及设置页「低」档累计 2 秒。SelectObject 云台控件将上下（俯仰）、左右（航向）、速度、两个反向勾选和发送按钮放在同一排，默认值分别为 50°、45°、14°/s；复用 Web 的 ROS1 发布链路。
+左侧卡片新增经度、纬度、海拔三行显示（经纬度为度分秒，秒保留两位，海拔保留一位米）。以 odom 的 `(0,0,0)` 为北纬 `22°17′00″`、东经 `114°09′00″`、海拔约 `150 m`，固定 `+X 北、+Y 西、+Z 上`；使用卡片对应的 `/drone_{id}_visual_slam/odom`，不是点云。标注“推算”，无数据、断线或超过 3 秒未收到有效位置时显示横线。
+
+当前 APK 版本为 `1.0.14-flight-2s-gridmap`（versionCode 17），基于保存的飞行版构建；实时点云默认及设置页「低」档累计 2 秒。建图打点和自主飞行模式均关闭 `/drone_{id}_localization_pcl` 可视化，只调整显示配置，定位、录制、加载、打点和飞行逻辑保持不变。SelectObject 云台控件将上下（俯仰）、左右（航向）、速度、两个反向勾选和发送按钮放在同一排，默认值分别为 50°、45°、14°/s；复用 Web 的 ROS1 发布链路。
+
+左侧卡片新增「复位视角」：通过已有 `world → base{id}` SLAM TF 回到当前位置，正上方俯视，恢复初始布局默认距离约 33.4 米。保持位置跟随，不跟随机身倾斜；不新增数据订阅或发布飞行/定位命令。
+
+左侧相机卡片显示单路 640×480（4:3）图像，Topic 为 `/gimbal_camera/image_raw/compressed`，由机载 `image_transport` 发布 ROS1 `sensor_msgs/CompressedImage`（JPEG）旋转后的画面；复用已有压缩图像解码，不订阅原始图像或左右两路鱼眼 Topic。
+
+实时点云显示源为 `/nav/data/visual_pointcloud`，沿用消息中的 `world` 坐标系。新增内置 `/terrain_surface_map` GridMap 高程曲面：`elevation` 高度和彩虹色、黑色网格线，只保留最新一帧地图。
+
+卡片电量主读数显示整数百分比，沿用现有 6S 电压换算（18.0–25.2 V 对应 0–100%）；悬浮提示仍保留电压用于查看。
 
 ## 模块目标
 
@@ -171,3 +181,8 @@ AI Agent 在修改代码后应说明建议的 Android Studio 验证步骤，但�
 - 未实际运行的测试必须明确标注“未运行”，不要宣称通过。
 - 用户选择在 Android Studio 编译时，不要在终端执行 Gradle 或 Web 编译。
 - 最终说明修改文件、关键行为、需要用户在 Android Studio 执行的验证步骤以及已知硬件依赖。
+
+
+### 2026-11-12 录包 Action 交付
+
+APK `1.0.14-flight-2s-gridmap`（versionCode 17）与 Web 使用同一份生产资源。录包目录固定 `/home/colman/data`，点击确认开始时生成 `data_YYYYMMDD_HHmm`，开始携带指定 65 项 topics、timeout=10；结束 cmd=2、timeout=120。新协议为 `/nav/map/record/goal` + `spikive_control_sdk/RecordActionGoal`，按匹配 goal_id 的 result 判定完成。Android 网络入口和 WebView 宿主逻辑保持现状。交付目录：`build/artifacts/20261112/record-action/`。
