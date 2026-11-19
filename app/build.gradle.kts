@@ -76,6 +76,8 @@ val buildSpikiveWeb by tasks.registering(Exec::class) {
             include("tsconfig.json")
             include("web/src/**")
             include("packages/*/src/**")
+            include("packages/*/webpack.ts")
+            include("packages/*/webpack/**")
             include("packages/@types/*/src/**")
         },
     )
